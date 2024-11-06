@@ -75,7 +75,30 @@ namespace equipos_futbol
             }
             return jugadorEncontrado;
         }
+        public void AgregarJugadorClub(string nombreJugador, string nombreClub)
+        {
+            // Buscar jugador
+            Jugador jugador = BuscarJugador(nombreJugador);
+            Club club = BuscarClub(nombreClub);
 
-        // Cambio de mano
+            if (jugador != null && club != null)
+            {
+                club.jugadores.Add(jugador);
+            }
+        }
+        public void BorrarJugadorClub(string nombreJugador, string nombreClub)
+        {
+
+        }
+        public void ReasignarJugadorClub(string nombreJugador)
+        {
+
+        }
+
+        public void BorrarClub(string nombreClub)
+        {
+
+        }
+
     }
 }
