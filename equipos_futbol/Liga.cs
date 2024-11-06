@@ -40,5 +40,40 @@ namespace equipos_futbol
         }
 
 
+        public void AgregarJugador(Jugador jugador)
+        {
+            if (!listaJugadores.Contains(jugador))
+                listaJugadores.Add(jugador);
+            else
+                Console.WriteLine($"No se puede agregar el Jugador {jugador.Nombre} pues ya existe en la BBDD.");
+        }
+
+        public Jugador BuscarJugador(string nombreJugador)
+        {
+            nombreJugador = TratarEntradaString(nombreJugador);
+            Jugador jugadorEncontrado = listaJugadores.FirstOrDefault(c => c.Nombre == nombreJugador);
+
+            if (jugadorEncontrado == null)
+                return null;
+            else
+                return jugadorEncontrado;
+        }
+
+        public Jugador CambioAsignacion(string nombreJugador)
+        {
+            nombreJugador = TratarEntradaString(nombreJugador);
+            Jugador jugadorEncontrado = listaJugadores.FirstOrDefault(c => c.Nombre == nombreJugador);
+
+            if (jugadorEncontrado == null)
+            {  
+                return null; 
+            }
+            else
+            {
+                jugadorEncontrado.Asignacion = true;
+                //listaJugadores.Update(jugadorEncontrado);
+            }
+            return jugadorEncontrado;
+        }
     }
 }
