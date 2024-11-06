@@ -59,21 +59,16 @@ namespace equipos_futbol
                 return jugadorEncontrado;
         }
 
-        public Jugador CambioAsignacion(string nombreJugador)
+        public void CambioAsignacion(string nombreJugador)
         {
             nombreJugador = TratarEntradaString(nombreJugador);
-            Jugador jugadorEncontrado = listaJugadores.FirstOrDefault(c => c.Nombre == nombreJugador);
-
-            if (jugadorEncontrado == null)
-            {  
-                return null; 
-            }
-            else
+            foreach(var jugador in listaJugadores)
             {
-                jugadorEncontrado.Asignacion = true;
-                //listaJugadores.Update(jugadorEncontrado);
+                if(jugador.Nombre==nombreJugador)
+                {
+                    jugador.Asignacion = true;
+                }
             }
-            return jugadorEncontrado;
         }
     }
 }
