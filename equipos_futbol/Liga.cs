@@ -94,13 +94,24 @@ namespace equipos_futbol
         }
         public void ReasignarJugadorClub(string nombreJugador)
         {
+            // Buscar jugador
+            Jugador jugador = BuscarJugador(nombreJugador);
 
+            if (jugador != null)
+                jugador.Asignacion = true;
         }
 
         public void BorrarClub(string nombreClub)
         {
-
+            // Buscar Club
+            foreach (Club club in listaClubes)
+            {
+                if (club.Nombre == nombreClub)
+                {
+                    listaClubes.Remove(club);
+                    return;
+                }
+            }
         }
-
     }
 }
