@@ -77,7 +77,7 @@ namespace equipos_futbol
         }
         public void AgregarJugadorClub(string nombreJugador, string nombreClub)
         {
-            // Buscar jugador
+            // Buscar jugador y club
             Jugador jugador = BuscarJugador(nombreJugador);
             Club club = BuscarClub(nombreClub);
 
@@ -88,7 +88,14 @@ namespace equipos_futbol
         }
         public void BorrarJugadorClub(string nombreJugador, string nombreClub)
         {
+            // Buscar jugador y club
+            Jugador jugador = BuscarJugador(nombreJugador);
+            Club club = BuscarClub(nombreClub);
 
+            if (jugador != null && club != null)
+            {
+                club.jugadores.Remove(jugador);
+            }
         }
         public void ReasignarJugadorClub(string nombreJugador)
         {
