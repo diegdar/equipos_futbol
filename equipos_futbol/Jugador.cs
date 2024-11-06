@@ -17,11 +17,11 @@ namespace equipos_futbol
         {
 
         }
-        public Jugador(string nombre, string numero, bool asignacion)
+        public Jugador(string nombre, string numero, bool asignacion = false)
         {
             Nombre = nombre;
             Numero = numero;
-            Asignacion = false;
+            Asignacion = asignacion;
         }
     }
 }
