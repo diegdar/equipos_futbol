@@ -19,7 +19,7 @@ namespace equipos_futbol
                 Console.WriteLine($"No se puede agregar el club {club.Nombre} pues ya existe en la BBDD.");
         }
 
-        private string TratarEntradaString(string input)
+        public string TratarEntradaString(string input)
         {//Convierte la primera letra a mayusculas y el resto lo deja en minusculas, ademas de quitar espacios del principio y final
             input = input.Trim();
             if (string.IsNullOrEmpty(input))

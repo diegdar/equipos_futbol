@@ -9,8 +9,10 @@ namespace equipos_futbol
 {
     internal class Program
     {
+       static Liga liga = new Liga();
         static void Main(string[] args)
         {
+           
             while (true)
             {
                 Console.WriteLine(@"
@@ -55,24 +57,24 @@ namespace equipos_futbol
 
         }
 
-        private static string TratarEntradaString(string input)
-        {//Convierte la primera letra a mayusculas y el resto lo deja en minusculas, ademas de quitar espacios del principio y final
-            input = input.Trim();
-            if (string.IsNullOrEmpty(input))
-                return input;
+        //private static string TratarEntradaString(string input)
+        //{//Convierte la primera letra a mayusculas y el resto lo deja en minusculas, ademas de quitar espacios del principio y final
+        //    input = input.Trim();
+        //    if (string.IsNullOrEmpty(input))
+        //        return input;
 
-            return char.ToUpper(input[0]) + input.Substring(1).ToLower();
-        }
+        //    return char.ToUpper(input[0]) + input.Substring(1).ToLower();
+        //}
 
 
         static public void CrearJugador()
         {
             Console.WriteLine("Dime el nombre del jugador");
             string nombre = Console.ReadLine();
-            nombre = TratarEntradaString(nombre);
+            nombre = liga.TratarEntradaString(nombre);
             Console.WriteLine("Dime el numero de la camiseta del jugador");
             string numero = Console.ReadLine();
-            numero = TratarEntradaString(numero);
+            numero = liga.TratarEntradaString(numero);
 
             Jugador jugador = new Jugador(nombre, numero);
 
