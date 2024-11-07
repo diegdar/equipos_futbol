@@ -19,10 +19,10 @@ namespace equipos_futbol
                  >>>Eligue una de las siguientes opciones:
                 0: Salir del menu.
                 1: Crear un jugador.
-                2: Crear un club.
-                3: Agregar un jugador a un club.
-                4: Agregar un club a la liga.
-                5: Buscar un jugador.
+                2: Crear un club en la liga.
+                3: Asignar un jugador a un club.
+                4: Borrar un jugador de un club.
+                5: Borrar un club de la liga.
                 ");
                 int opcion = int.Parse(Console.ReadLine());
 
@@ -30,19 +30,19 @@ namespace equipos_futbol
                 {
                     case 0: return;
                     case 1:
-                        CrearJugador();
+                        liga.CrearJugador();
                         break;
                     case 2:
-                        CrearClub();
+                        liga.CrearClubLiga();
                         break;
                     case 3:
-                        AgregarJugadorAClub();
+                        AsignarJugadorAClub();
                         break;
                     case 4:
-                        AgregarClubALiga();
+                        BorrarJugadorClub();
                         break;
                     case 5:
-                        BuscarJugador();
+                        BorrarClubLiga();
                         break;
                     default:
                         Console.WriteLine("Opcion no valida!!");
@@ -54,31 +54,42 @@ namespace equipos_futbol
                 Console.ReadKey();
                 Console.WriteLine(); //para empezar el menu de nueva linia
             }
-
         }
 
-        //private static string TratarEntradaString(string input)
-        //{//Convierte la primera letra a mayusculas y el resto lo deja en minusculas, ademas de quitar espacios del principio y final
-        //    input = input.Trim();
-        //    if (string.IsNullOrEmpty(input))
-        //        return input;
-
-        //    return char.ToUpper(input[0]) + input.Substring(1).ToLower();
-        //}
-
-
-        static public void CrearJugador()
+        public static void AsignarJugadorAClub()
         {
             Console.WriteLine("Dime el nombre del jugador");
-            string nombre = Console.ReadLine();
-            nombre = liga.TratarEntradaString(nombre);
-            Console.WriteLine("Dime el numero de la camiseta del jugador");
-            string numero = Console.ReadLine();
-            numero = liga.TratarEntradaString(numero);
+            string nomJugador = Console.ReadLine();
+            nomJugador = liga.TratarEntradaString(nomJugador);
+            Console.WriteLine("Dime el nombre del club");
+            string nomClub = Console.ReadLine();
+            nomClub = liga.TratarEntradaString(nomClub);
+            Console.WriteLine("Dime el numero de la camiseta que se le asignará al jugador en el club");
+            string numCamiseta = Console.ReadLine();
+            numCamiseta = liga.TratarEntradaString(numCamiseta);
 
-            Jugador jugador = new Jugador(nombre, numero);
+            liga.AgregarJugadorClub(nomJugador, nomClub, numCamiseta);
+        }
 
-            Console.WriteLine("El jugador se ha creado correctamente");
+        public static void BorrarJugadorClub()
+        {
+            Console.WriteLine("Dime el nombre del jugador");
+            string nomJugador = Console.ReadLine();
+            nomJugador = liga.TratarEntradaString(nomJugador);
+            Console.WriteLine("Dime el nombre del club");
+            string nomClub = Console.ReadLine();
+            nomClub = liga.TratarEntradaString(nomClub);
+
+            liga.BorrarJugadorClub(nomJugador, nomClub);
+        }
+
+        public static void BorrarClubLiga()
+        {
+            Console.WriteLine("Dime el nombre del club");
+            string nomClub = Console.ReadLine();
+            nomClub = liga.TratarEntradaString(nomClub);
+
+            liga.BorrarClub(nomClub);
         }
     }
 }
