@@ -15,6 +15,7 @@ namespace equipos_futbol
            
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine(@"
                  >>>Eligue una de las siguientes opciones:
                 0: Salir del menu.
@@ -23,6 +24,7 @@ namespace equipos_futbol
                 3: Asignar un jugador a un club.
                 4: Borrar un jugador de un club.
                 5: Borrar un club de la liga.
+                6: Listar Jugadores por Club.
                 ");
                 int opcion = int.Parse(Console.ReadLine());
 
@@ -43,6 +45,9 @@ namespace equipos_futbol
                         break;
                     case 5:
                         BorrarClubLiga();
+                        break;
+                    case 6:
+                        liga.ListarJudadoresPorClub();
                         break;
                     default:
                         Console.WriteLine("Opcion no valida!!");
@@ -91,5 +96,7 @@ namespace equipos_futbol
 
             liga.BorrarClub(nomClub);
         }
+
+
     }
 }

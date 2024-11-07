@@ -124,6 +124,7 @@ namespace equipos_futbol
                 }
             }
         }
+       
         public void AgregarJugadorClub(string nombreJugador, string nombreClub, string numCamiseta)
         {
             // Buscar jugador y club
@@ -148,6 +149,7 @@ namespace equipos_futbol
                 $" con el numero de camiseta {numCamiseta}");
 
         }
+        
         public void BorrarJugadorClub(string nombreJugador, string nombreClub)
         {
             // Buscar jugador y club
@@ -193,6 +195,35 @@ namespace equipos_futbol
 
             listaClubes.Remove(club);
             Console.WriteLine($"El club {nombreClub} se ha elimado correctamente de la liga!!");
+        }
+
+        public void ListarJudadoresPorClub()
+        {
+            Console.Clear();
+            Console.Write("Ingrese el nombre del club: ");
+            string nombreJugador = Console.ReadLine();
+            Club club = null;
+
+            foreach (var m in listaClubes)
+            {
+                if (m.Nombre.ToUpper() == nombreJugador.ToUpper())
+                {
+                    club = m;
+                    break;
+                }
+            }
+
+            if (club == null)
+            {
+                Console.WriteLine("Club no encontrado.");
+                Console.WriteLine();
+                Console.WriteLine("Presione una Enter para continuar");
+                Console.ReadLine();
+                return;
+            }
+
+            club.MostrarJuadoresPorClub();
+
         }
     }
 }
