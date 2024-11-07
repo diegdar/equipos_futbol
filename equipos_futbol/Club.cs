@@ -12,15 +12,20 @@ namespace equipos_futbol
         public List<Jugador> jugadores = new List<Jugador>();
 
 
-        public Club()
-        {
-
-        }
-
-        public Club(string nombre, List<Jugador> jugadores)
+        public Club(string nombre)
         {
             Nombre = nombre;
-            this.jugadores = jugadores;
+        }
+
+        public void AgregarJugador(Jugador jugador)
+        {
+            if (jugadores.Contains(jugador))
+                Console.WriteLine($"El club {this.Nombre} ya tenia al jugador {jugador.Nombre}.");
+            else
+            {
+                jugadores.Add(jugador);
+                jugador.Asignacion = true;
+            }
         }
     }
 }
