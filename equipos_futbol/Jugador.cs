@@ -13,9 +13,10 @@ namespace equipos_futbol
         public bool Asignacion { get; set; }
 
 
-        public Jugador()
+        public Jugador(string nombre, bool asignacion = false)
         {
-
+            Nombre = nombre;
+            Asignacion = asignacion;
         }
         public Jugador(string nombre, string numero, bool asignacion = false)
         {
