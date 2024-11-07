@@ -11,14 +11,6 @@ namespace equipos_futbol
         List<Jugador> listaJugadores = new List<Jugador>();
         List<Club> listaClubes = new List<Club>();
 
-        public void AgregarClub(Club club)
-        {
-            if (!listaClubes.Contains(club))
-                listaClubes.Add(club);
-            else
-                Console.WriteLine($"No se puede agregar el club {club.Nombre} pues ya existe en la BBDD.");
-        }
-
         public string TratarEntradaString(string input)
         {//Convierte la primera letra a mayusculas y el resto lo deja en minusculas, ademas de quitar espacios del principio y final
             input = input.Trim();
@@ -39,19 +31,81 @@ namespace equipos_futbol
                 return clubEncontrado;
         }
 
-
-        public void AgregarJugador(Jugador jugador)
+        private bool EstaElJugadorEnElClub(string nombre)
         {
-            if (!listaJugadores.Contains(jugador))
+            return listaJugadores.Any(j => j.Nombre == nombre);
+        }
+
+        private void AsignarNumeroAJugador(string nomJugador, string numero)
+        {
+            Jugador jugador = BuscarJugador(nomJugador);
+            bool existeNumero = true;
+
+            if (jugador == null)
+            {
+                Console.WriteLine($"El jugador {nomJugador} no existe!!");
+                return;
+            }
+
+            do
+            {
+                existeNumero = listaJugadores.Any(j => j.Numero == numero);
+
+                if (existeNumero)
+                {
+                    Console.WriteLine($"El numero {numero} ya esta codigo por otro jugador!!. Debes elegir otro.");
+                    Console.WriteLine("Dime un nuevo numero para la camiseta del jugador");
+                    numero = Console.ReadLine();
+                    numero = TratarEntradaString(numero);
+                }
+            }
+            while (existeNumero);
+
+            jugador.Numero = numero;
+        }
+
+
+        public void CrearJugador()
+        {
+            Console.WriteLine("Dime el nombre del jugador");
+            string nombre = Console.ReadLine();
+            nombre = TratarEntradaString(nombre);
+
+            if (!EstaElJugadorEnElClub(nombre))
+            {
+                Jugador jugador = new Jugador(nombre);
                 listaJugadores.Add(jugador);
+                Console.WriteLine($"Se ha creado correctamente el jugador {nombre}");
+            }
             else
-                Console.WriteLine($"No se puede agregar el Jugador {jugador.Nombre} pues ya existe en la BBDD.");
+                Console.WriteLine($"No se puede agregar el Jugador {nombre} pues ya existe en la BBDD.");
+        }
+
+        public bool ExisteElClub(string nombre)
+        {
+            return listaClubes.Any(c => c.Nombre == nombre);
+        }
+
+        public void CrearClubLiga()
+        {
+            Console.WriteLine("Dime el nombre del club");
+            string nombre = Console.ReadLine();
+            nombre = TratarEntradaString(nombre);
+
+            if (!ExisteElClub(nombre))
+            {
+                Club club = new Club(nombre);
+                listaClubes.Add(club);
+                Console.WriteLine($"Se ha agregado el club {club.Nombre} correctamente a la liga.");
+            }
+            else
+                Console.WriteLine($"No se puede agregar el club {nombre} pues ya existe en la BBDD.");
         }
 
         public Jugador BuscarJugador(string nombreJugador)
         {
             nombreJugador = TratarEntradaString(nombreJugador);
-            Jugador jugadorEncontrado = listaJugadores.FirstOrDefault(c => c.Nombre == nombreJugador);
+            Jugador jugadorEncontrado = listaJugadores.FirstOrDefault(j => j.Nombre == nombreJugador);
 
             if (jugadorEncontrado == null)
                 return null;
@@ -64,22 +118,35 @@ namespace equipos_futbol
             nombreJugador = TratarEntradaString(nombreJugador);
             foreach(var jugador in listaJugadores)
             {
-                if(jugador.Nombre==nombreJugador)
+                if(jugador.Nombre == nombreJugador)
                 {
                     jugador.Asignacion = true;
                 }
             }
         }
-        public void AgregarJugadorClub(string nombreJugador, string nombreClub)
+        public void AgregarJugadorClub(string nombreJugador, string nombreClub, string numCamiseta)
         {
             // Buscar jugador y club
             Jugador jugador = BuscarJugador(nombreJugador);
             Club club = BuscarClub(nombreClub);
 
-            if (jugador != null && club != null)
+            if (jugador == null)
             {
-                club.jugadores.Add(jugador);
+                Console.WriteLine($"El jugador {nombreJugador} no existe en la BBDD!!");
+                return;
             }
+
+            if (club == null)
+            {
+                Console.WriteLine($"El club {nombreClub} no existe en la BBDD!!");
+                return;
+            }
+
+            AsignarNumeroAJugador(nombreJugador, numCamiseta);
+            club.jugadores.Add(jugador);
+            Console.WriteLine($"El jugador {nombreJugador} se asigno correctamente al club {nombreClub}" +
+                $" con el numero de camiseta {numCamiseta}");
+
         }
         public void BorrarJugadorClub(string nombreJugador, string nombreClub)
         {
@@ -87,11 +154,24 @@ namespace equipos_futbol
             Jugador jugador = BuscarJugador(nombreJugador);
             Club club = BuscarClub(nombreClub);
 
-            if (jugador != null && club != null)
+            if (jugador == null)
             {
-                club.jugadores.Remove(jugador);
+                Console.WriteLine($"El jugador {nombreJugador} no existe en la BBDD!!");
+                return;
             }
+
+            if (club == null)
+            {
+                Console.WriteLine($"El club {nombreClub} no existe en la BBDD!!");
+                return;
+            }
+
+            club.jugadores.Remove(jugador);
+            Console.WriteLine($"El jugador {nombreJugador} se borro correctamente del club {nombreClub}");
         }
+
+        //TODO: al reasignar el jugador no deberia tambien quitar el
+        //jugador de un club y ponerlo en otro?
         public void ReasignarJugadorClub(string nombreJugador)
         {
             // Buscar jugador
@@ -103,15 +183,16 @@ namespace equipos_futbol
 
         public void BorrarClub(string nombreClub)
         {
-            // Buscar Club
-            foreach (Club club in listaClubes)
+            Club club = BuscarClub(nombreClub);
+
+            if (club == null)
             {
-                if (club.Nombre == nombreClub)
-                {
-                    listaClubes.Remove(club);
-                    return;
-                }
+                Console.WriteLine($"El club {nombreClub} no existe en la BBDD!!");
+                return;
             }
+
+            listaClubes.Remove(club);
+            Console.WriteLine($"El club {nombreClub} se ha elimado correctamente de la liga!!");
         }
     }
 }
