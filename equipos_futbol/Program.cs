@@ -26,7 +26,9 @@ namespace equipos_futbol
                 5: Borrar un club de la liga.
                 6: Listar Jugadores por Club.
                 ");
-                int opcion = int.Parse(Console.ReadLine());
+                int opcion;
+                if (!int.TryParse(Console.ReadLine(), out opcion))
+                    opcion = -1;
 
                 switch (opcion)
                 {

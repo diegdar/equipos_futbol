@@ -146,7 +146,7 @@ namespace equipos_futbol
             AsignarNumeroAJugador(nombreJugador, numCamiseta);
             club.jugadores.Add(jugador);
             Console.WriteLine($"El jugador {nombreJugador} se asigno correctamente al club {nombreClub}" +
-                $" con el numero de camiseta {numCamiseta}");
+                $" con el numero de camiseta {jugador.Numero}");
 
         }
         
@@ -169,6 +169,7 @@ namespace equipos_futbol
             }
 
             club.jugadores.Remove(jugador);
+            jugador.Numero = "";
             Console.WriteLine($"El jugador {nombreJugador} se borro correctamente del club {nombreClub}");
         }
 
